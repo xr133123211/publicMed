@@ -1,0 +1,61 @@
+.cropper-bg{
+background: transparent ! important;
+}
+
+.img-container,
+.img-preview {
+  background-color: #f7f7f7;
+  width: 100%;
+  text-align: center;
+}
+
+.img-container {
+  min-height: 200px;
+  max-height: 516px;
+  margin-bottom: 20px;
+}
+
+.img-container > img {
+  max-width: 100%;
+}
+
+.docs-preview {
+  margin-right: -15px;
+}
+
+.img-preview {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.img-preview > img {
+  max-width: 100%;
+}
+
+
+.preview-md {
+  width: 120px;
+  height: 120px;
+}
+
+.preview-sm {
+  width: 80px;
+  height: 80px;
+}
+
+.preview-xs {
+  width: 34px;
+  height: 34px;
+  margin-right: 0;
+}
+.ErrMsgNew{
+    color: #E4393C;
+}
+#updatePwd .ErrMsgNew,#updateName .ErrMsgNew{
+  width: 253px;
+  float: right;
+  margin-top: 10px;
+}
+

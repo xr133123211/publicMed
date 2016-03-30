@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+       default-autowire="byName" default-lazy-init="false">
+
+	<!-- dbcp连接池 -->
+	<bean id="dataSource_online" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${${env}.online.jdbc.driver}" />
+		<property name="url" value="${${env}.online.jdbc.url}" />
+		<property name="username" value="${${env}.online.jdbc.username}" />
+		<property name="password" value="${${env}.online.jdbc.password}" />
+		<property name="initialSize" value="5" />
+		<property name="maxTotal" value="50" />
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="2" />
+		<property name="defaultAutoCommit" value="true" />
+	</bean>
+
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="onlineSqlSession" />
+		<property name="basePackage" value="com.pubmed.medicine.dao" />
+	</bean>
+
+
+    <bean id="onlineSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" name="onlineSqlSession">
+		<property name="dataSource" ref="dataSource_online" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="typeAliasesPackage" value="com.pubmed.medicine.model" />
+		<property name="mapperLocations" >
+            <list>
+                <value>classpath:mappers/*.xml</value>
+            </list>
+        </property>
+	</bean>
+
+
+</beans>
