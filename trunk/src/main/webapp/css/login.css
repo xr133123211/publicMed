@@ -1,0 +1,23 @@
+*{margin:0;padding:0;}
+html,body{background:url(../images/login_bg.jpg) repeat;}
+.clearfix:after {clear:both; content:' '; display:block; font-size:0; line-height:0; visibility:hidden; width:0; height:0}
+* html .clearfix {zoom:1}
+.login_logo{width:176px;height:90px;display:block;background:url(../images/login_logo.jpg) no-repeat 0 0;margin:0 auto 20px auto;}
+.loginBox{width:302px;margin:100px auto;}
+.input_div{width:300px;height:99px;diaplay:block;background:url(../images/input_bg.jpg) no-repeat 0 0;}
+#id,#password{width:300px;height:35px;padding:8px 0;border:1px solid #bbb;border-left:0;font-size:25px;line-height:35px;float:left;width:250px;color:#444;background:#fff url(../images/input_bg.gif) repeat-x;}
+#id{border-bottom:0;}
+.login_table tr,.login_table td{padding:0;margin:0;}
+.username_label,.password_label{padding:8px 0 8px 10px;height:35px;font-size:14px;line-height:35px;color:#aaa;background:#fff url(../images/input_bg.gif) repeat-x;border:1px solid #bbb;border-right:0;display:block;width:40px;float:left;}
+.username_label{border-bottom:0;}
+.btn_login,.btn_login_click{width:302px;height:46px;display:block;background: url(../images/login_btn.jpg) no-repeat;border:0;margin-top:20px;}
+.btn_login:hover{background-position:0 -46px;}
+.btn_login_click,.btn_login_click:hover{background-position:0 -92px;}
+a{color:#078eed;text-decoration: none;}
+a:hover{text-decoration: underline;}
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+.errors{background:#ffffda;border:1px solid #f7b46c;padding:5px 10px;font-size:14px;margin-bottom:10px;}

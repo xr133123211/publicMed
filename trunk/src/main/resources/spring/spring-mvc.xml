@@ -31,7 +31,7 @@
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 				<bean
 					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="prefix" value="/pages/" />
+					<property name="prefix" value="/WEB-INF/jsp/" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
@@ -47,6 +47,6 @@
 	<!-- 静态资源路径 -->
 	<!--<mvc:resources mapping="/favicon.ico"-->
 		<!--location="/static/img/favicon.ico" order="0" />-->
-	<mvc:resources mapping="/static/**" location="/static/" />
+	<mvc:resources mapping="/static/**" location="/" />
 
 </beans>

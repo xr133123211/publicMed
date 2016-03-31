@@ -13,6 +13,8 @@
               <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
        </context:component-scan>
        <!-- json -->
+
+       <mvc:resources mapping="/static/**" location="/"/>
        <mvc:annotation-driven>
               <mvc:message-converters>
                      <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter" />
@@ -23,7 +25,7 @@
        <!-- 视图文件映射 -->
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
               <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-              <property name="prefix" value="/pages/"/>
+              <property name="prefix" value="/WEB-INF/jsp/"/>
               <property name="suffix" value=".jsp"/>
               <property name="order" value="1000" />
        </bean>

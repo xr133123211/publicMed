@@ -1,0 +1,56 @@
+.header_help {width:100%; background:#f1f1f1; text-align:center}
+.header_help .inner {width:890px; height:50px; padding:10px 35px; margin:0 auto}
+.logo {width:150px; float:left}
+.top {float:left; width:740px; padding-top:10px}
+.search_key {width:308px; border:1px solid #BBB; padding:6px 6px 5px}
+
+.container {width:890px}
+.container h1 span{font-size:12px; font-weight:normal;}
+.mt_36 {margin-top:36px}
+.mt_20 {margin-top:20px}
+.sidebar {float:left; width:130px}
+.content {float:right; width:710px}
+
+.nav_side {padding:0;}
+.nav_side li{width:100%; height:28px; line-height:28px; font-size:14px; margin-top:1px}
+.nav_side li.line{height:1px; line-height:1px; font-size:0; margin:10px 0; padding:0;}
+.nav_side li.special{margin-top:15px}
+
+.nav_side li a{width:106px; height:28px; line-height:28px; padding:0 12px}
+.nav_side li a.current{color:#fff; font-weight:bold; background:url(../images/bg_help_nav.gif) no-repeat left top}
+
+.list {}
+.list li{padding:8px 0 8px 12px; background:url(../images/list_dotBlue2px.gif) no-repeat left 12px; font-size:14px}
+.btnRed {color:#CE4A3C}
+.separator {margin-top:10px; *margin-top:0; width:150px}
+#cates select{margin-right:4px;}
+
+.searchResult {width:510px; line-height:150%; margin-bottom:25px}
+.searchResult a span.keyword{text-decoration:underline; color:#CE4A3C; text}
+.search_highlight, a.search_highlight, a.search_highlight:hover {color:#C60A00}
+.highlightRed {color:#F00}
+
+
+/*.popLayer{width:390px; line-height:22px;}
+
+.popLayer p{margin-left:10px;}
+.popLayer .input_box {width:208px; border:1px solid #BBB; padding:6px 6px 5px;  margin-left:10px;margin-bottom:40px;}
+*/
+.layerDiv .bottomdiv{ background-color:#DDEEFF; padding:9px 10px; text-align:right;}
+a.addLnk {background:url(../images/icon_help.gif) no-repeat left top; padding-left:18px}
+a.add_cate {*padding-top:2px}
+a.add_doc {background-position:left -25px}
+
+.txtH25 {height:28px; line-height:28px; padding:0 0 0 5px}
+.tAH120 {height:120px}
+
+.tableHelpFaultDetail {}
+.tableHelpFaultDetail .tr1{background:#fff}
+.tableHelpFaultDetail .tr2{background:#DFEEFF}
+.tableHelpFaultDetail td{padding:25px 0; vertical-align:top; font-size:14px}
+
+.wellDone {background:url(../images/icon_help.gif) no-repeat left -50px; padding:5px 0 5px 30px}
+
+.tableList td{padding-left:8px}
+
+.bg_greenF4FFEE {background:#F4FFEE}
