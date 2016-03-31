@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pubmed.medicine.dao.AuthDao">
+
+    <select id="getByUserId" resultType="Auth">
+        SELECT * FROM trust where user_id = #{user_id}
+    </select>
+    <select id="getByOrgId" resultType="Auth">
+        SELECT * FROM trust where org_id = #{org_id}
+    </select>
+    
+    <insert id="insert" parameterType="Auth">
+        INSERT into trust
+        (user_id,org_id,type,weight,trustDate,status)
+        VALUES (#{user_id},#{org_id},#{type},#{weight},getDate(),#{status})
+    </insert>
+    
+    <update id="update" parameterType="Auth">
+        update trust set
+        user_id = #{user_id},
+        org_id = #{org_id},
+        type = #{type},
+        trustDate = getDate(),
+        status = #{status},
+        weight = #{weight}
+        where id = #{id}
+    </update>
+
+</mapper>
