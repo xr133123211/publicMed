@@ -1,6 +1,14 @@
 use publicMedicine
 
-
+create table temp_access_vote
+(
+id bigInt IDENTITY (1,1)primary key,
+userId bigInt,
+accessId bigInt,
+votePoint int,
+status int,
+authDate datetime
+)
 
 create table trust
 (
@@ -24,14 +32,7 @@ threshold int,
 status int
 )
 
-create table temp_access_vote
-(
-id bigInt IDENTITY (1,1)primary key,
-userId bigInt,
-accessId bigInt,
-votePoint int,
-authDate datetime
-)
+
 
 create table temp_access
 (

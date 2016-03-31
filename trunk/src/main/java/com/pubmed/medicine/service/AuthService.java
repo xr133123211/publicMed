@@ -23,6 +23,10 @@ public class AuthService {
 		return authDao.getByOrgId(org.getId());
 	}
 
+	public List<User> getVoteOrgs(User user,int type){
+		return authDao.getOrgs(user.getId(),type);
+	}
+
 	public void addAuth(User user,User org,int weight){
 		Auth auth = new Auth();
 		auth.setUser_id(user.getId());

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pubmed.medicine.dao.VoteDao">
+
+    <select id="getAllByUserId" resultType="Vote">
+        SELECT * FROM temp_access_vote where userId = #{userId}
+    </select>
+
+    <select id="getNotVotedByUserId" resultType="Vote">
+        SELECT * FROM temp_access_vote where userId = #{userId} and status=0
+    </select>
+
+    <select id="getByAccessId" resultType="Vote">
+        SELECT * FROM temp_access_vote where accessId = #{accessId}
+    </select>
+
+    <insert id="insert" parameterType="Vote">
+        INSERT into temp_access_vote
+        (userId,accessId,votePoint,authDate,status)
+        VALUES (#{userId},#{accessId},#{votePoint},getDate(),0)
+    </insert>
+    
+    <update id="update" parameterType="Vote">
+        update temp_access_vote set
+        userId = #{userId},
+        accessId = #{accessId},
+        authDate = getDate(),
+        status = #{status},
+        votePoint = #{votePoint}
+        where id = #{id}
+    </update>
+
+</mapper>

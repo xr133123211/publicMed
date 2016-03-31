@@ -16,6 +16,13 @@ public class TestAuthDao extends  BaseTest {
     @Autowired
     UserService userService;
 
+    @Test
+    public void testSelectRelated(){
+        User user = userService.getUser("master");
+        User org = userService.getUser("expert");
+        System.out.println(authService.getVoteOrgs(user,org.getType()).get(0).getName());
+
+    }
 
     public void test(){
         User user = userService.getUser("master");

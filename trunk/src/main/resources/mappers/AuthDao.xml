@@ -8,6 +8,13 @@
     <select id="getByOrgId" resultType="Auth">
         SELECT * FROM trust where org_id = #{org_id}
     </select>
+
+    <select id="getOrgs" resultType="User">
+        SELECT org.* from trust t
+        inner join users org on t.org_id = org.id
+        where t.user_id=#{user_id} and t.type = #{type}
+    </select>
+
     
     <insert id="insert" parameterType="Auth">
         INSERT into trust
