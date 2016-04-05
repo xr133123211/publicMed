@@ -15,4 +15,5 @@ public interface AuthDao {
 	public List<Auth> getByOrgId(@Param("org_id") long orgId);
 	public List<User> getOrgs(@Param("user_id") long userId, @Param("type") int type);
 
+
 }

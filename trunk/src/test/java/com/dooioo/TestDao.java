@@ -2,6 +2,7 @@ package com.dooioo;
 
 import com.pubmed.medicine.model.User;
 import com.pubmed.medicine.service.UserService;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -11,10 +12,10 @@ public class TestDao extends  BaseTest {
     @Autowired
     UserService userService;
 
-
+    @Test
     public void selectUser(){
-        System.out.println(userService.getUser(1L).getName());
-        System.out.println(userService.getUser("admin","admin").getId());
+        User sessionUser = userService.getUser("admin");
+        System.out.println(sessionUser.getId());
     }
 
 

@@ -9,7 +9,7 @@
 
     <tag>
         <name>paginate</name>
-        <tag-class>com.dooioo.web.common.tag.PaginateTag</tag-class>
+        <tag-class>com.pubmed.common.PaginateTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>template</name>

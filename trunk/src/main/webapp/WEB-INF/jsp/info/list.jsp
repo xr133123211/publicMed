@@ -8,13 +8,13 @@
     <tags:sidebar categories="${categories}" currentCateId="${param.cateId}"/>
 
     <div class="contentRight">
-        <h2 class="mt_15 f14">文章列表</h2>
+        <h2 class="mt_15 f14">权限列表</h2>
         <div class="navTab2th mt_15 clearfix" id="test">
-            <a href="/article" id ="newest"   >最新的
+            <a href="/article" id ="newest"   >最新的访问记录
             </a>
-            <a href="/column/hot"  id ="famous" >最受欢迎的</a>
-            <c:if test="${SESSION_USER_V2 != null }">
-            <a href="/column/personal/${SESSION_USER_V2.id }"  id ="mine"  >我的文章</a>
+            <a href="/column/hot"  id ="famous" >最新的申请申请</a>
+            <c:if test="${session_user != null }">
+            <a href="/column/personal/${session_user.id }"  id ="mine"  >权限分配</a>
             </c:if>
         </div>
         <table width="100%" cellspacing="0" class="tableListNew mt_10">

@@ -16,7 +16,7 @@
                     <span class="grey999"><fmt:formatDate value="${comment.createdAt}" pattern="a HH:mm:ss.S"/></span></p>
                     <div id="${comment.id}" class="mt_15">
                         <p >${comment.content}</p>
-                        <c:if test="${SESSION_USER_V2!=null&&comment.userId==SESSION_USER_V2.id}">
+                        <c:if test="${session_user!=null&&comment.userId==session_user.id}">
                         <p class="mt_5"><a href="#"  onclick="editcomment(${comment.id})" >编辑</a><a href="#" class="red ml_10" onclick="deletecomment(${comment.id})">删除</a></p>
                         </c:if>
                     </div>

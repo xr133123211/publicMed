@@ -36,6 +36,11 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>用户类型 <form:errors path="phone" cssClass="red ml_10"/><br />
+                            <form:input path="type" cssClass="txt tt160"/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="clearfix">
                                 <span class="left">密码</span><form:errors path="password" cssClass="red ml_10"/>

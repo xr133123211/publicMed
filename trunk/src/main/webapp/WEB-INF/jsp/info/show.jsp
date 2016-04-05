@@ -16,7 +16,7 @@
                 <div class="mb_20 clearfix">
                     <h3 class="left lineH180"><a href="#" target="_blank" class="f14 bold ">${article.title}</a></h3>
                     <p class="right">
-                    <c:if test="${SESSION_USER_V2 != null && article.userId==SESSION_USER_V2.id}">
+                    <c:if test="${session_user != null && article.userId==session_user.id}">
 			    		<a href="/article/${article.id}/edit" class="btnOpH24 h24Silver in_block ml_5" id="edit_btn">编辑</a>
                         <a href="javascript:void(0);" class="btnOpH24 h24Silver in_block ml_5" id="btnDel">删除</a>
             		</c:if> 

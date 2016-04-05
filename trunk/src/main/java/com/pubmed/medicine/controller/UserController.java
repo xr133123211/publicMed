@@ -5,6 +5,7 @@ import com.pubmed.common.base.BaseController;
 import com.pubmed.medicine.Helper.UserHelper;
 import com.pubmed.medicine.model.User;
 import com.pubmed.medicine.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
 
+	private Logger logger =  Logger.getLogger(this.getClass());
 	@Autowired
 	private UserService userService;
 
@@ -30,18 +32,18 @@ public class UserController extends BaseController {
 		return "user/login";
 	}
 
-
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String submit(@ModelAttribute User user, BindingResult result,
+	public String submitLogin(@ModelAttribute User user, BindingResult result,
 						 HttpServletRequest request,
 						 HttpServletResponse response,
 						 HttpSession session) {
+		logger.info("User Login "+user.getName());
 		User sessionUser = userService.getUser(user.getName());
 		UserHelper.checkLogin(user,sessionUser,result);
 		if(result.hasErrors()) {
 			return "user/login";
 		}
-
+		logger.info("SessionUser Is "+sessionUser.getName());
 		session.setAttribute(Constants.SESSION_USER, sessionUser);
 		return "redirect:/index";
 	}
@@ -55,7 +57,6 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String submitRegister(@ModelAttribute User user, BindingResult result, HttpSession session) {
-
 			User user_sql = userService.getUser(user.getName());
 			UserHelper.vaildID(user, user_sql, result);
 			if(result.hasErrors()) {

@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>${param.title} - 德佑地产</title>
+    <title>共享医疗信息</title>
     <link type="text/css" rel="stylesheet" href="http://dui.dooioo.com/public/css/main.css">
     <link type="text/css" rel="stylesheet" href="http://dui.dooioo.com/public/css/headerNew.css">
     <script type="text/javascript" src="/static/js/portal.js"></script>
@@ -20,25 +20,23 @@
             </c:if>
         </c:forEach>
     </c:if>
-    <title>列表页-德佑地产</title>
+    <title>列表页</title>
 </head>
 
 <body>
 <div class="headerWrap">
     <div class="header clearfix">
-		<span class="left">
-			<a href="#" class="logo_mini left"></a>
-        </span>		
-        <span class="ml_10 in_block f24 mr_20 mt_5 left" style="color:#FFF;font-family:'微软雅黑'">快速入手</span>
-        <input id=key type="text" class="searchBoxTop left ml_5 mt_8 grey999" value="输入问题关键词，如：产品线、技术分享等…" onfocus="clearTxtMsg($(this),'输入问题关键词，如：产品线、技术分享等…', 'grey999')" ondrop="clearTxtMsg($(this),'输入问题关键词，如：产品线、技术分享等…', 'grey999')" onblur="showTxtMsg($(this),'输入问题关键词，如：产品线、技术分享等…', 'grey999')">
+
+        <span class="ml_10 in_block f24 mr_20 mt_5 left" style="color:#FFF;font-family:'微软雅黑'">快速搜索</span>
+        <input id=key type="text" class="searchBoxTop left ml_5 mt_8 grey999" value="输入信息关键词，如：用户名称、技术类型等…" onfocus="clearTxtMsg($(this),'输入信息关键词，如：用户名称、技术类型等…', 'grey999')" ondrop="clearTxtMsg($(this),'输入信息关键词，如：用户名称、技术类型等…', 'grey999')" onblur="showTxtMsg($(this),'输入信息关键词，如：用户名称、技术类型等…', 'grey999')">
         <input id=search type="button" class="searchBtnTop left mt_8" value="" >
 		<span class="right mt_10 pt_5">
 
-            <c:if test="${SESSION_USER_V2 == null}">
+            <c:if test="${session_user == null}">
 			    <a href="/user/login" class="white mr_10">登录</a><a href="/user/register" class="white ">注册</a>
             </c:if>
-            <c:if test="${SESSION_USER_V2 != null}">
-                <a href="/column/personal/${SESSION_USER_V2.id}" id=personal class="white ">欢迎，${SESSION_USER_V2.name}</a>
+            <c:if test="${session_user != null}">
+                <a href="/column/personal/${session_user.id}" id=personal class="white ">欢迎，${session_user.name}</a>
                 <a href="/user/logout" class="white ml_10">退出</a>
             </c:if>
 		</span>
@@ -61,7 +59,7 @@ $(function(){
 	 $("#search").click(function(){
 
 		 var content = document.getElementById("key").value;
-		 location.href='/article/search/'+ content;
+		 location.href='/info/search/'+ content;
 		
 	 });
 });
