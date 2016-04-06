@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pubmed.medicine.dao.InfoDao">
+
+    <select id="findById" resultType="Info">
+        SELECT a.* ,b.name as categoryName,c.name as username from info a
+        inner join type_value b on a.typeId = b.id
+        inner join users c on a.userId = c.id
+        where a.id = #{id}
+    </select>
+
+    <insert id="add" parameterType="Info">
+        INSERT into info
+        (userId,content,title,typeId,updateTime)
+        VALUES (#{userId},#{content},#{title},#{typeId},getDate())
+    </insert>
+    
+    <update id="update" parameterType="Info">
+        update info set
+        userId = #{userId},
+        content = #{content},
+        title = #{title},
+        typeId = #{typeId},
+        updateTime = getDate()
+        where id = #{id}
+    </update>
+
+</mapper>

@@ -6,9 +6,9 @@
 
 <div class="container">
     <div class="clearfix">
-        <div class="mv_10 f16 bold">文章编辑</div>
-        <form:form modelAttribute="article" method="post">
-            <c:if test="${not empty article.id}">
+        <div class="mv_10 f16 bold">医疗信息编辑</div>
+        <form:form modelAttribute="info" method="post">
+            <c:if test="${not empty info.id}">
                 <form:hidden path="id"/>
             </c:if>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableForm formView">
@@ -16,7 +16,6 @@
                     <td width="200" valign="top" class="txtRight">标 题：</td>
                     <td valign="top" class="red st">●</td>
                     <td>
-                        <form:errors path="title" cssClass="ErrMsgNew"/>
                         <form:input path="title" cssClass="txtNew w300"/>
                     </td>
                 </tr>
@@ -24,7 +23,6 @@
                     <td valign="top" class="txtRight">内 容：</td>
                     <td valign="top" class="red st">●</td>
                     <td>
-                        <form:errors path="content" cssClass="ErrMsgNew"/>
                         <form:textarea path="content" cssClass="bd_ccc" rows="10" cols="80" cssStyle="border-radius:3px"/>
                     </td>
                 </tr>
@@ -32,8 +30,7 @@
                     <td valign="top" class="txtRight">类 型：</td>
                     <td valign="top" class="red st">●</td>
                     <td>
-                        <form:errors path="categoryId" cssClass="ErrMsgNew"/>
-                        <form:select path="categoryId">
+                        <form:select path="typeId">
                             <form:options items="${categories}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </td>
@@ -41,7 +38,7 @@
             </table>
         </form:form>
         <div class="right">
-            <a href="#" class="btnOpH34 h34Silver opH34 in_block mr_20" onclick="window.location='/article'">取消</a>
+            <a href="#" class="btnOpH34 h34Silver opH34 in_block mr_20" onclick="window.location='/info'">取消</a>
             <a href="#" class="btnOpH34 h34Blue opH34 in_block" id="artCommit">提交</a>
         </div>
     </div>
@@ -50,7 +47,7 @@
 <script type="text/javascript">
 window.onload=(function(){	
 	artCommit.onclick=(function() {
-        article.submit();
+        info.submit();
         return false
     });
 })

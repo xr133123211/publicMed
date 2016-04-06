@@ -10,28 +10,30 @@
     <div class="contentRight">
         <h2 class="mt_15 f14">权限列表</h2>
         <div class="navTab2th mt_15 clearfix" id="test">
-            <a href="/article" id ="newest"   >最新的访问记录
-            </a>
-            <a href="/column/hot"  id ="famous" >最新的申请申请</a>
+            <a href="/info" id ="newest"   >最新的访问记录</a>
+            <a href="/info/apply"  id ="apply" >最新的申请记录</a>
             <c:if test="${session_user != null }">
-            <a href="/column/personal/${session_user.id }"  id ="mine"  >权限分配</a>
+            <a href="/info/assign/${session_user.id }"  id ="mine"  >权限分配</a>
+            </c:if>
+            <c:if test="${session_user != null }">
+                <a href="/info/vote/${session_user.id }"  id ="mine"  >等待投票</a>
             </c:if>
         </div>
         <table width="100%" cellspacing="0" class="tableListNew mt_10">
             <tr class="trHead">
-                <td width="380" ><a href="/article?cateId=${category.id}&sortKey=title">标题</a></td>
-                <td width="100" ><a href="/article?cateId=${category.id}&sortKey=userid">作者</a></td>
-                <td width="100" ><a href="/article?cateId=${category.id}&sortKey=categoryId">类别</a></td>
-                <td width="80" ><a href="/article?cateId=${category.id}&sortKey=createdAt">创建时间</a></td>
-                <td width="80" ><a href="/article?cateId=${category.id}&sortKey=updatedAt">更新时间</a></td>
+                <td width="200" ><a href="">病历类别</a></td>
+                <td width="120" ><a href="">用户名</a></td>
+                <td width="120" ><a href="">访问者</a></td>
+                <td width="80" ><a href="">访问时间</a></td>
+                <td width="80" ><a href="">授权时间</a></td>
             </tr>
-            <c:forEach var="article" items="${paginate.pageList}">
+            <c:forEach var="access" items="${paginate.pageList}">
                 <tr class="tr">
-                    <td><a href="/article/${article.id}">${article.title}</a></td>
-                    <td>${article.username}</td>
-                    <td>${article.categoryName}</td>
-                    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${article.createdAt}"/></td>
-                    <td><c:if test="${not empty article.updatedAt}"><fmt:formatDate pattern="yyyy-MM-dd" value="${article.updatedAt}"/></c:if></td>
+                    <td>${access.categoryName}</td>
+                    <td>${access.userName}</td>
+                    <td>${access.accessName}</td>
+                    <td><c:if test="${not empty article.updatedAt}"><fmt:formatDate pattern="yyyy-MM-dd" value="${info.accessTime}"/></c:if></td>
+                    <td><c:if test="${not empty article.updatedAt}"><fmt:formatDate pattern="yyyy-MM-dd" value="${info.authTime}"/></c:if></td>
                 </tr>
             </c:forEach>
         </table>

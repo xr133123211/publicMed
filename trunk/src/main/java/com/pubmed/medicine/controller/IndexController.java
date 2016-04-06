@@ -34,17 +34,8 @@ public class IndexController extends BaseController {
 						@RequestParam(value = "sortKey", defaultValue = "id") String sortKey,
 						HttpServletRequest request,HttpSession session,
 						Model model) {
-		Paginate paginate = new Paginate(0,10);
-		model.addAttribute("paginate", paginate);
-		User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
-		if(user==null) logger.info("SendBackUser is null");
-		else logger.info("SendBackUser:"+user.getName());
-		return "/info/list";
+		return "/index";
 	}
 
-	@ModelAttribute("categories")
-	public List<Category> categories() {
-		return categoryService.queryForList();
-	}
 
 }

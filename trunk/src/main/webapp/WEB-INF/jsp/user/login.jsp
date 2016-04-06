@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>登录 </title>
+    <title>登录 - public medicine</title>
     <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
     <link type="text/css" rel="stylesheet" href="/static/css/old_login.css" />
 </head>
@@ -67,7 +67,7 @@
 </div>
 
 <!--begin: footer-->
-<div class="footer clearFix">&copy;2016 public medicine </div>
+<div class="footer clearFix">&copy;2016 public Medicine </div>
 
 
 <!--end: footer-->
@@ -83,15 +83,15 @@
             user.focus();
             return false;
         }
-        
+
         if(password.value==''){
             alert("请输入密码");
             password.focus();
             return false;
         }
         if (user.value.indexOf(' ') >=0||password.indexOf(' ')>=0) {
-        	alert("输入有空格！");
-        	return false;
+            alert("输入有空格！");
+            return false;
         }
         $('#login').addClass('hideit');
         $('#loginig').show();

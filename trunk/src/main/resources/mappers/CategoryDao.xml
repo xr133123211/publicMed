@@ -6,6 +6,10 @@
         SELECT * from type_value where id!=0
     </select>
 
+    <select id="getAllCategories" resultType="User">
+        SELECT * from type_value
+    </select>
+
     
     <insert id="insert" parameterType="Auth">
         INSERT into type_value

@@ -11,4 +11,6 @@ public interface CategoryDao {
 	public void update(Category cate);
 
 	public List<Category> getCategories();
+	public List<Category> getAllCategories();
+
 }

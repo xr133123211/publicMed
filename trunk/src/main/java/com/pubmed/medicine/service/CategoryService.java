@@ -12,6 +12,9 @@ import java.util.List;
 public class CategoryService {
 	@Autowired
 	CategoryDao categoryDao;
+	public List<Category> GetAllList() {
+		return categoryDao.getAllCategories();
+	}
 	public List<Category> queryForList() {
 		return categoryDao.getCategories();
 	}

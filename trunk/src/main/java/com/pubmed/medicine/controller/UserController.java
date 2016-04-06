@@ -3,7 +3,9 @@ package com.pubmed.medicine.controller;
 import com.pubmed.common.Constants;
 import com.pubmed.common.base.BaseController;
 import com.pubmed.medicine.Helper.UserHelper;
+import com.pubmed.medicine.model.Category;
 import com.pubmed.medicine.model.User;
+import com.pubmed.medicine.service.CategoryService;
 import com.pubmed.medicine.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -25,6 +28,8 @@ public class UserController extends BaseController {
 	private Logger logger =  Logger.getLogger(this.getClass());
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CategoryService categoryService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String show(Model model) {
@@ -45,7 +50,12 @@ public class UserController extends BaseController {
 		}
 		logger.info("SessionUser Is "+sessionUser.getName());
 		session.setAttribute(Constants.SESSION_USER, sessionUser);
-		return "redirect:/index";
+		return "redirect:/info";
+	}
+
+	@ModelAttribute("categories")
+	public List<Category> categories() {
+		return categoryService.GetAllList();
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -64,7 +74,7 @@ public class UserController extends BaseController {
 			}
 			else {
 				userService.insert(user);
-				return "redirect:/index";
+				return "redirect:/info";
 			}
 		}
 
@@ -72,7 +82,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, Model model) {
 		request.getSession().setAttribute(Constants.SESSION_USER, null);
-		return "redirect:/index";
+		return "redirect:/info";
 	}
 
 }

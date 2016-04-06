@@ -36,8 +36,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>用户类型 <form:errors path="phone" cssClass="red ml_10"/><br />
-                            <form:input path="type" cssClass="txt tt160"/>
+                        <td>用户类型
+                            <form:select path="type"><br/>
+                                <form:options items="${categories}" itemValue="id" itemLabel="name"/>
+                            </form:select>
                         </td>
                     </tr>
                     <tr>

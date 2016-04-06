@@ -1,4 +1,4 @@
-SESSION_USER_V2.loginBox {width:310px; margin:100px auto}
+.loginBox {width:310px; margin:100px auto}
 .corner {width:5px; height:29px; background:#637083 url(../images/icons_login.gif) no-repeat left top; float:left}
 .btm {width:4px; height:6px}
 .tr {background-position:-7px top}
