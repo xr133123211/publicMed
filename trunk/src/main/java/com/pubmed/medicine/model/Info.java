@@ -54,7 +54,7 @@ public class Info implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return categoryName+"病历";
     }
 
     public void setTitle(String title) {

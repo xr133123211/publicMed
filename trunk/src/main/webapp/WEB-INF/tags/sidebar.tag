@@ -8,7 +8,7 @@
     <div class="navLeft mv_10">
         <a href="/info" class="${empty currentCateId ? 'in_block current' : ''}">全部病历</a>
         <c:forEach var="category" items="${categories}">
-            <a href="/info?typeId=${category.id}" class="${currentCateId == category.id ? 'in_block current' : ''}">${category.name}</a>
+            <a href="/info/detail?typeId=${category.id}" class="${currentCateId == category.id ? 'in_block current' : ''}">${category.name}</a>
         </c:forEach>
     </div>
 <%--

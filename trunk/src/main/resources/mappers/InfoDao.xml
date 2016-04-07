@@ -9,6 +9,13 @@
         where a.id = #{id}
     </select>
 
+    <select id="findByUser" resultType="Info">
+        SELECT a.* ,b.name as categoryName,c.name as username from info a
+        inner join type_value b on a.typeId = b.id
+        inner join users c on a.userId = c.id
+        where a.userId = #{userId} and a.typeId = #{typeId}
+    </select>
+
     <insert id="add" parameterType="Info">
         INSERT into info
         (userId,content,title,typeId,updateTime)
@@ -17,7 +24,6 @@
     
     <update id="update" parameterType="Info">
         update info set
-        userId = #{userId},
         content = #{content},
         title = #{title},
         typeId = #{typeId},

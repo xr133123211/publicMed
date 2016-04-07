@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/index")
+@RequestMapping(value = "/")
 public class IndexController extends BaseController {
 
 	private Logger logger =  Logger.getLogger(this.getClass());
@@ -34,7 +34,7 @@ public class IndexController extends BaseController {
 						@RequestParam(value = "sortKey", defaultValue = "id") String sortKey,
 						HttpServletRequest request,HttpSession session,
 						Model model) {
-		return "/index";
+		return "redirect:/info";
 	}
 
 

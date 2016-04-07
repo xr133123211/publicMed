@@ -59,18 +59,20 @@ public class InfoController extends BaseController {
         return "/info/list";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable int id, HttpServletRequest request, Model model) throws NotFoundException {
-        Info info = infoService.findById(id);
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public String show(@RequestParam(value = "typeId", defaultValue = "0") int typeId, HttpServletRequest request, Model model) throws NotFoundException {
+        User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+        Info info = infoService.findByUser(user.getId(),typeId);
         if(info == null) {
-            throw new NotFoundException("该文章不存在.");            
-        } else {
-            model.addAttribute(info);
-            /*to add
-            model.addAttribute("comments", commentService.queryForList(article.getId()));
-            model.addAttribute("comment", new Comment()); */
-            return "/article/show";
+            info = new Info();
+            info.setCategoryId(typeId);
+            info.setUserId(user.getId());
+            info.setTitle("");
+            infoService.insert(info);
+            info = infoService.findByUser(user.getId(),typeId);
         }
+        model.addAttribute(info);
+        return "/info/show";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -143,7 +145,6 @@ public class InfoController extends BaseController {
         if(user.getId() != info.getUserId()) {
             throw new NotFoundException("没有权限.");
         }
-
         model.addAttribute(info);
         return "/info/form";
     }
@@ -151,42 +152,12 @@ public class InfoController extends BaseController {
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
     public String update(@ModelAttribute Info info, BindingResult result, HttpServletRequest request, Model model) {
         InfoHelper.validate(result);
-        Info oldInfo = infoService.findById(info.getId());
-        if(oldInfo == null) {
-            return "error";
-        }
         if(result.hasErrors()) {
             return "/info/form";
         }
         infoService.update(info);
-        return "redirect:/info/{id}";
+        logger.info("Update Info Conetent:"+info.getContent());
+        return "redirect:/info/detail?typeId="+info.getTypeId();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody
-    JsonResult delete(@PathVariable int id, HttpServletRequest request, Model model) throws Exception {
-        User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
-        if(user == null) {
-            throw new IllegalArgumentException("请先登录.");
-        }
-        Info info = infoService.findById(id);
-        if(info == null) {
-            throw new NotFoundException("该文章不存在.");
-        } else if (info.getUserId() != user.getId()) {
-            throw new IllegalArgumentException("只能删除自己的.");
-        } else {
-            infoService.delete(id);
-            return ok();
-        }
-    }
-
-    @RequestMapping(value = "/{id}/getJson", method = RequestMethod.GET)
-    public @ResponseBody JsonResult getJson(@PathVariable int id) throws NotFoundException {
-        Info info = infoService.findById(id);
-        if(info == null) {
-            throw new NotFoundException("信息不存在.");
-        } else {
-            return ok();
-        }
-    }
 }

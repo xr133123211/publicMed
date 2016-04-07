@@ -34,8 +34,13 @@ public class InfoService {
 	}
 
 	public void update(Info info) {
+		infoDao.update(info);
 	}
 
 	public void delete(int id) {
+	}
+
+	public Info findByUser(long userId,long typeId) {
+		return infoDao.findByUser(userId,typeId);
 	}
 }

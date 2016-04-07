@@ -1,14 +1,5 @@
 use publicMedicine
 
-create table access_history
-(
-id bigInt IDENTITY (1,1)primary key,
-userId bigInt,
-orgId bigInt,
-typeId int,
-accessTime datetime
-)
-
 
 create table info
 (
@@ -21,6 +12,14 @@ status int,
 updateTime datetime
 )
 
+create table access_history
+(
+id bigInt IDENTITY (1,1)primary key,
+userId bigInt,
+orgId bigInt,
+typeId int,
+accessTime datetime
+)
 
 
 create table temp_access_vote
@@ -69,3 +68,4 @@ status int,
 authDate datetime
 
 )
+

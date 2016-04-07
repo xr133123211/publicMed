@@ -16,7 +16,7 @@
                     <td width="200" valign="top" class="txtRight">标 题：</td>
                     <td valign="top" class="red st">●</td>
                     <td>
-                        <form:input path="title" cssClass="txtNew w300"/>
+                        <form:input path="title" cssClass="txtNew w300"  readonly="true"/>
                     </td>
                 </tr>
                 <tr>
@@ -30,7 +30,7 @@
                     <td valign="top" class="txtRight">类 型：</td>
                     <td valign="top" class="red st">●</td>
                     <td>
-                        <form:select path="typeId">
+                        <form:select path="typeId"  readonly="true">
                             <form:options items="${categories}" itemValue="id" itemLabel="name"/>
                         </form:select>
                     </td>
