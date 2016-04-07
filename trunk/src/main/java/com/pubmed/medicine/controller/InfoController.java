@@ -58,18 +58,21 @@ public class InfoController extends BaseController {
         else logger.info("SendBackUser:"+user.getName());
         return "/info/list";
     }
-
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public String show(@RequestParam(value = "typeId", defaultValue = "0") int typeId, HttpServletRequest request, Model model) throws NotFoundException {
-        User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
-        Info info = infoService.findByUser(user.getId(),typeId);
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public String lookUser(@PathVariable long userId,HttpServletRequest request, Model model){
+        return "redirect:/info";
+    }
+    @RequestMapping(value = "/detail/{userId}", method = RequestMethod.GET)
+    public String show(@PathVariable long userId,@RequestParam(value = "typeId", defaultValue = "0") int typeId, HttpServletRequest request, Model model) throws NotFoundException {
+        //User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+        Info info = infoService.findByUser(userId,typeId);
         if(info == null) {
             info = new Info();
             info.setCategoryId(typeId);
-            info.setUserId(user.getId());
+            info.setUserId(userId);
             info.setTitle("");
             infoService.insert(info);
-            info = infoService.findByUser(user.getId(),typeId);
+            info = infoService.findByUser(userId,typeId);
         }
         model.addAttribute(info);
         return "/info/show";
@@ -156,8 +159,9 @@ public class InfoController extends BaseController {
             return "/info/form";
         }
         infoService.update(info);
+        info = infoService.findById(info.getId());
         logger.info("Update Info Conetent:"+info.getContent());
-        return "redirect:/info/detail?typeId="+info.getTypeId();
+        return "redirect:/info/detail/"+info.getUserId()+"?typeId="+info.getTypeId();
     }
 
 }

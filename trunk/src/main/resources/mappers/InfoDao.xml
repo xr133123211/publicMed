@@ -26,7 +26,6 @@
         update info set
         content = #{content},
         title = #{title},
-        typeId = #{typeId},
         updateTime = getDate()
         where id = #{id}
     </update>
