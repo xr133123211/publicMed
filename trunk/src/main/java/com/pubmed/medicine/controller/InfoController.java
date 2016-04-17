@@ -46,6 +46,10 @@ public class InfoController extends BaseController {
         return categoryService.queryForList();
     }
 
+    @RequestMapping(value = "/*",method = RequestMethod.GET)
+    public String get404(){
+        return "/common/notPermitted";
+    }
     @RequestMapping(method = RequestMethod.GET)
     public String list( @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
                         @RequestParam(value = "sortKey", defaultValue = "id") String sortKey,
@@ -57,10 +61,6 @@ public class InfoController extends BaseController {
         if(user==null) logger.info("SendBackUser is null");
         else logger.info("SendBackUser:"+user.getName());
         return "/info/list";
-    }
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public String lookUser(@PathVariable long userId,HttpServletRequest request, Model model){
-        return "redirect:/info";
     }
     @RequestMapping(value = "/detail/{userId}", method = RequestMethod.GET)
     public String show(@PathVariable long userId,@RequestParam(value = "typeId", defaultValue = "0") int typeId, HttpServletRequest request, Model model) throws NotFoundException {

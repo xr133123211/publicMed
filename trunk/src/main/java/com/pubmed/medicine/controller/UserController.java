@@ -1,6 +1,7 @@
 package com.pubmed.medicine.controller;
 
 import com.pubmed.common.Constants;
+import com.pubmed.common.Paginate;
 import com.pubmed.common.base.BaseController;
 import com.pubmed.medicine.Helper.UserHelper;
 import com.pubmed.medicine.model.Category;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -83,6 +85,14 @@ public class UserController extends BaseController {
 	public String logout(HttpServletRequest request, Model model) {
 		request.getSession().setAttribute(Constants.SESSION_USER, null);
 		return "redirect:/info";
+	}
+
+
+	@RequestMapping(value = "/personal/{userId}", method = RequestMethod.GET)
+	public String viewPersonal(@PathVariable long userId,Model model) {
+		Paginate paginate = new Paginate(0,10);
+		model.addAttribute("paginate", paginate);
+		return "user/personal";
 	}
 
 }

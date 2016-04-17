@@ -5,11 +5,13 @@
 <head>
     <meta charset="utf-8">
     <title>共享医疗信息</title>
-    <link type="text/css" rel="stylesheet" href="http://dui.dooioo.com/public/css/main.css">
-    <link type="text/css" rel="stylesheet" href="http://dui.dooioo.com/public/css/headerNew.css">
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
     <script type="text/javascript" src="/static/js/portal.js"></script>
-    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
-     <script type="text/javascript" src="/static/js/ed.js"></script>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/ed.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
     <c:if test="${ not empty param.css}">
         <c:forEach var="css" items="${fn:split(param.css, ',')}">
             <c:if test="${not empty css && !fn:contains(css,'http://')}">
@@ -24,44 +26,44 @@
 </head>
 
 <body>
-<div class="headerWrap">
-    <div class="header clearfix">
-
-        <span class="ml_10 in_block f24 mr_20 mt_5 left" style="color:#FFF;font-family:'微软雅黑'">快速搜索</span>
-        <input id=key type="text" class="searchBoxTop left ml_5 mt_8 grey999" value="输入信息关键词，如：用户名称、技术类型等…" onfocus="clearTxtMsg($(this),'输入信息关键词，如：用户名称、技术类型等…', 'grey999')" ondrop="clearTxtMsg($(this),'输入信息关键词，如：用户名称、技术类型等…', 'grey999')" onblur="showTxtMsg($(this),'输入信息关键词，如：用户名称、技术类型等…', 'grey999')">
-        <input id=search type="button" class="searchBtnTop left mt_8" value="" >
-		<span class="right mt_10 pt_5">
-
-            <c:if test="${session_user == null}">
-			    <a href="/user/login" class="white mr_10">登录</a><a href="/user/register" class="white ">注册</a>
-            </c:if>
-            <c:if test="${session_user != null}">
-                <a href="/column/personal/${session_user.id}" id=personal class="white ">欢迎，${session_user.name}</a>
-                <a href="/user/logout" class="white ml_10">退出</a>
-            </c:if>
-		</span>
-    </div>
-</div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+        <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+               </button>
+            <a class="navbar-brand" href="#">共享医疗信息</a>
+        </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="btn btn-link" id="search_btn">搜索</a></li>
+                    <c:if test="${session_user == null}">
+                        <li><a href="/user/login">登录</a></li>
+                        <li><a href="/user/register">注册</a></li>
+                    </c:if>
+                    <c:if test="${session_user != null}">
+                        <li><a href="/user/personal/${session_user.id}">欢迎，${session_user.name}</a></li>
+                        <li><a href="/user/logout" >退出</a></li>
+                    </c:if>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search..." id="search_form">
+                </form>
+            </div>
+        </div>
+        </nav>
 <script type="text/javascript">
-$(function(){
-	 $("#personal").click(function(){
-		 return true;
-	 });
-});
-
-$(function(){
-	 $("#key").click(function(){
-		 document.getElementById("key").value="";
-	 });
-});
-
-$(function(){
-	 $("#search").click(function(){
-
-		 var content = document.getElementById("key").value;
-		 location.href='/info/search/'+ content;
-		
-	 });
-});
+    function search(){
+        var content = document.getElementById("search_form").value;
+        location.href='/search/'+ content;
+    }
+    $(function(){
+        $("#search_btn").click(function(){
+            search();
+        });
+    });
 </script>
 

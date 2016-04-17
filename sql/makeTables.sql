@@ -1,5 +1,5 @@
+create database publicMedicine
 use publicMedicine
-
 
 create table info
 (

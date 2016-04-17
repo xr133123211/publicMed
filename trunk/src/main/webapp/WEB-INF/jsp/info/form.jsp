@@ -4,9 +4,11 @@
     <jsp:param name="title" value="新增"/>
 </jsp:include>
 
-<div class="container">
-    <div class="clearfix">
-        <div class="mv_10 f16 bold">医疗信息编辑</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="contentRight">
+        <h2>医疗信息编辑</h2>
         <form:form modelAttribute="info" method="post">
             <c:if test="${not empty info.id}">
                 <form:hidden path="id"/>
@@ -38,8 +40,10 @@
             </table>
         </form:form>
         <div class="right">
-            <a href="#" class="btnOpH34 h34Silver opH34 in_block mr_20" onclick="window.location='/info'">取消</a>
-            <a href="#" class="btnOpH34 h34Blue opH34 in_block" id="artCommit">提交</a>
+            <a href="#" class="btn btn-default" onclick="window.location='/info'">取消</a>
+            <a href="#" class="btn btn-default" id="artCommit">提交</a>
+        </div>
+        </div>
         </div>
     </div>
 </div>
