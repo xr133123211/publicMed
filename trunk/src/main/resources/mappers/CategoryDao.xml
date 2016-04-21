@@ -2,22 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pubmed.medicine.dao.CategoryDao">
 
-    <select id="getCategories" resultType="User">
+    <select id="getCategories" resultType="Category">
         SELECT * from type_value where id!=0
     </select>
 
-    <select id="getAllCategories" resultType="User">
+    <select id="getAllCategories" resultType="Category">
         SELECT * from type_value
     </select>
 
     
-    <insert id="insert" parameterType="Auth">
+    <insert id="insert" parameterType="Category">
         INSERT into type_value
         (name,expertName)
         VALUES (#{name},#{expertName})
     </insert>
     
-    <update id="update" parameterType="Auth">
+    <update id="update" parameterType="Category">
         update type_value set
         name = #{name},
         expertName = #{expertName}

@@ -3,7 +3,7 @@ package com.pubmed.common;
 public class Constants {
 
 	public static final String SESSION_USER = "session_user";
-	public static final String Look_USER = "session_user";
+	public static final String LOOK_USER = "look_user";
 	public static final String TEMP_ACCESS = "temp_access";
 	public static final long JSVERSION = System.currentTimeMillis();
     

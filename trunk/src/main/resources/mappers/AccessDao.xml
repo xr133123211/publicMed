@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pubmed.medicine.dao.AccessDao">
+
+    <select id="findAccessByUser" resultType="Access">
+        SELECT a.*,b.name as categoryName,c.name as userName,d.name as accessName FROM access_history a
+        left join type_value b on a.typeId = b.id
+        left join users c on a.userId = c.id
+        left join users d on a.orgId = d.id
+        where a.userId = #{userId}
+    </select>
+
+    <select id="addAccess" parameterType="Access">
+        insert into access_history  (userId,orgId,typeId,accessTime)
+        values (#{userId},#{orgId},#{typeId},getDate())
+    </select>
+
+
+    <select id="findTempById" resultType="TempAccess">
+        SELECT * FROM access_history where id = #{id}
+    </select>
+
+    
+    <insert id="addTemp" parameterType="TempAccess">
+        INSERT into temp_access
+        (name,detail,type,access_id,authDate,status,phone)
+        VALUES (#{name},#{detail},#{type},#{access_id},authDate,0,#{phone})
+    </insert>
+    
+    <update id="updateTemp" parameterType="TempAccess">
+        update temp_access set
+        detail = #{detail},
+        authDate = getDate(),
+        status = #{status},
+        where id = #{id}
+    </update>
+    <select id="findTempByUser" resultType="TempAccess">
+        SELECT  * form temp_access
+        where access_id=#{userId} and type=#{typeID}
+    </select>
+
+</mapper>

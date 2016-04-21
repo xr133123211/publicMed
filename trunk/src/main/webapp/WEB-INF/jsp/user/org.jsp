@@ -8,10 +8,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">最新的访问记录<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">最新的申请记录</a></li>
-                <li><a href="#">权限分配列表 </a></li>
-                <li><a href="/info">病历信息</a></li>
+                <li class="active"><a href="">权限列表<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">等待投票</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -23,17 +21,17 @@
                     <tr>
                         <th>病历类别</th>
                         <th>用户名</th>
-                        <th>访问者</th>
-                        <th>访问时间</th>
+                        <th>医疗机构</th>
+                        <th>授权状态</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="access" items="${paginate.pageList}">
+                    <c:forEach var="auth" items="${paginate.pageList}">
                         <tr>
-                            <td>${access.categoryName}</td>
-                            <td>${access.userName}</td>
-                            <td>${access.accessName}</td>
-                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${access.accessTime}"/></td>
+                            <td>${auth.categoryName}</td>
+                            <td>${auth.userName}</td>
+                            <td>${auth.orgName}</td>
+                            <td><a href="/info/detail/${auth.user_id}?typeId=${auth.type}">${auth.authStatus}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

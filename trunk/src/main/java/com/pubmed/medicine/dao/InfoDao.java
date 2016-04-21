@@ -12,4 +12,5 @@ public interface InfoDao {
 	public void update(Info info);
 
 	Info findByUser(@Param("userId") long userId, @Param("typeId")long typeId);
+
 }

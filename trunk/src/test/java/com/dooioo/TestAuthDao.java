@@ -31,7 +31,6 @@ public class TestAuthDao extends  BaseTest {
         Auth auth = authService.getByUser(user).get(0);
         auth.setWeight(11);
         authService.updateAuth(auth);
-        System.out.print(authService.getByOrg(org).get(0).getWeight());
     }
 
 

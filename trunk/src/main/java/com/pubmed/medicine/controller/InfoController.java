@@ -12,6 +12,7 @@ import com.pubmed.medicine.model.User;
 import com.pubmed.medicine.service.AuthService;
 import com.pubmed.medicine.service.CategoryService;
 import com.pubmed.medicine.service.InfoService;
+import com.pubmed.medicine.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,8 @@ import java.util.List;
 public class InfoController extends BaseController {
 
     @Autowired
+    private UserService userService;
+    @Autowired
     private InfoService infoService;
     @Autowired
     private AuthService authService;
@@ -50,6 +53,7 @@ public class InfoController extends BaseController {
     public String get404(){
         return "/common/notPermitted";
     }
+
     @RequestMapping(method = RequestMethod.GET)
     public String list( @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
                         @RequestParam(value = "sortKey", defaultValue = "id") String sortKey,
@@ -60,11 +64,12 @@ public class InfoController extends BaseController {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
         if(user==null) logger.info("SendBackUser is null");
         else logger.info("SendBackUser:"+user.getName());
+        session.setAttribute(Constants.LOOK_USER,user);
         return "/info/list";
     }
     @RequestMapping(value = "/detail/{userId}", method = RequestMethod.GET)
     public String show(@PathVariable long userId,@RequestParam(value = "typeId", defaultValue = "0") int typeId, HttpServletRequest request, Model model) throws NotFoundException {
-        //User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+        User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
         Info info = infoService.findByUser(userId,typeId);
         if(info == null) {
             info = new Info();
@@ -74,7 +79,10 @@ public class InfoController extends BaseController {
             infoService.insert(info);
             info = infoService.findByUser(userId,typeId);
         }
+        logger.info("auth check userId:"+userId+" requestId:"+user.getId());
+        info.setAccessAuth(authService.checkAuth(userId,typeId,user.getId()));
         model.addAttribute(info);
+        request.getSession().setAttribute(Constants.LOOK_USER,userService.getUser(userId));
         return "/info/show";
     }
 
@@ -140,14 +148,6 @@ public class InfoController extends BaseController {
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String edit(@PathVariable int id, HttpServletRequest request, Model model) throws NotFoundException {
         Info info = infoService.findById(id);
-        if(info == null) {
-            throw new NotFoundException("该文章不存在.");
-        }
-
-        User user = (User)request.getSession().getAttribute(Constants.SESSION_USER);
-        if(user.getId() != info.getUserId()) {
-            throw new NotFoundException("没有权限.");
-        }
         model.addAttribute(info);
         return "/info/form";
     }

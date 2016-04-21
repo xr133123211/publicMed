@@ -3,11 +3,14 @@ package com.pubmed.medicine.service;
 import com.pubmed.common.Paginate;
 import com.pubmed.medicine.dao.CategoryDao;
 import com.pubmed.medicine.dao.InfoDao;
+import com.pubmed.medicine.dao.UserDao;
 import com.pubmed.medicine.model.Category;
 import com.pubmed.medicine.model.Info;
+import com.pubmed.medicine.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,6 +18,10 @@ import java.util.List;
 public class InfoService {
 	@Autowired
 	InfoDao infoDao;
+	@Autowired
+	UserDao userDao;
+	@Autowired
+	CategoryDao categoryDao;
 
 	public Info findById(long id) {
 		return infoDao.findById(id);
@@ -30,7 +37,26 @@ public class InfoService {
 	}
 
 	public Paginate queryForKeyword(int pageNo, String data) {
-		return null;
+		List<User>users = userDao.searchName(data);
+		List<Info> infos = new ArrayList<Info>();
+		List<Category> cats =  categoryDao.getAllCategories();
+		if(users!=null) {
+			for(User user:users)
+			for(Category ca:cats){
+				if(!ca.getName().equals("用户"))
+				{
+					Info in = new Info();
+					in.setCategoryId(ca.getId());
+					in.setCategoryName(ca.getName());
+					in.setUsername(user.getName());
+					in.setUserId(user.getId());
+					infos.add(in);
+				}
+			}
+		}
+		Paginate p = new Paginate(pageNo,10);
+		p.setPageList(infos);
+		return p;
 	}
 
 	public void update(Info info) {

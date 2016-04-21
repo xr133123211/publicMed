@@ -6,7 +6,7 @@
 <div class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
         <c:forEach var="category" items="${categories}">
-            <li><a href="/info/detail/${session_user.id}?typeId=${category.id}" class="${currentCateId == category.id ? 'in_block current' : ''}">${category.name}</a></li>
+            <li><a href="/info/detail/${look_user.id}?typeId=${category.id}" class="${currentCateId == category.id ? 'in_block current' : ''}">${category.name}</a></li>
         </c:forEach>
     </ul>
 </div>

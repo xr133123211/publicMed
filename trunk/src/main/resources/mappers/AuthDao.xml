@@ -3,10 +3,20 @@
 <mapper namespace="com.pubmed.medicine.dao.AuthDao">
 
     <select id="getByUserId" resultType="Auth">
-        SELECT * FROM trust where user_id = #{user_id}
+       SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName
+        FROM trust a
+        left join users b on a.user_id=b.id
+        left join users c on a.org_id=c.id
+        left join type_value d on a.type = d.id
+        where a.user_id = #{user_id}
     </select>
     <select id="getByOrgId" resultType="Auth">
-        SELECT * FROM trust where org_id = #{org_id}
+        SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName
+        FROM trust a
+        left join users b on a.user_id=b.id
+        left join users c on a.org_id=c.id
+        left join type_value d on a.type = d.id
+        where a.org_id = #{org_id}
     </select>
 
     <select id="getOrgs" resultType="User">
@@ -19,18 +29,22 @@
     <insert id="insert" parameterType="Auth">
         INSERT into trust
         (user_id,org_id,type,weight,trustDate,status)
-        VALUES (#{user_id},#{org_id},#{type},#{weight},getDate(),#{status})
+        VALUES (#{user_id},#{org_id},#{type},#{weight},getDate(),0)
     </insert>
     
     <update id="update" parameterType="Auth">
         update trust set
-        user_id = #{user_id},
-        org_id = #{org_id},
-        type = #{type},
         trustDate = getDate(),
         status = #{status},
         weight = #{weight}
         where id = #{id}
     </update>
+
+    <select id="getAuth" resultType="Auth">
+        SELECT top 1 * from trust where
+        user_id = #{user_id}
+        and org_id = #{org_id}
+        and type = #{type}
+    </select>
 
 </mapper>

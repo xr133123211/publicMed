@@ -20,6 +20,7 @@ public class Info implements Serializable {
     private String categoryName;
     private String username;
     private int categoryId;
+    private boolean accessAuth;
 
     public String getCategoryName() {
         return categoryName;
@@ -91,5 +92,13 @@ public class Info implements Serializable {
 
     public void setCategoryId(int categoryId) {
         this.typeId = categoryId;
+    }
+
+    public boolean isAccessAuth() {
+        return accessAuth;
+    }
+
+    public void setAccessAuth(boolean accessAuth) {
+        this.accessAuth = accessAuth;
     }
 }

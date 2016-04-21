@@ -9,7 +9,7 @@
     <tags:sidebar categories="${categories}" currentCateId="${param.cateId}"/>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="contentRight">
-            <h1 class="page-header"><c:if test="${session_user != null}">${session_user.name}</c:if>病历信息</h1>
+            <h1 class="page-header"><c:if test="${look_user != null}">${look_user.name}</c:if>病历信息</h1>
         </div>
     </div>
 

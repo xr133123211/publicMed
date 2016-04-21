@@ -1,5 +1,6 @@
 package com.pubmed.medicine.service;
 
+import com.pubmed.common.Paginate;
 import com.pubmed.medicine.dao.UserDao;
 import com.pubmed.medicine.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
