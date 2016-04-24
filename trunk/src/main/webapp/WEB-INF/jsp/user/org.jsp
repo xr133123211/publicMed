@@ -9,7 +9,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="">权限列表<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">等待投票</a></li>
+                <li><a href="/user/vote">等待投票</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -31,7 +31,7 @@
                             <td>${auth.categoryName}</td>
                             <td>${auth.userName}</td>
                             <td>${auth.orgName}</td>
-                            <td><a href="/info/detail/${auth.user_id}?typeId=${auth.type}">${auth.authStatus}</td>
+                            <td><a href="/info/detail/${auth.user_id}?typeId=${auth.type}">${auth.authStatus}</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>

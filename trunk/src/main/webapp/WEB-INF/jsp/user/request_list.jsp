@@ -8,37 +8,33 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="">搜索结果</a></li>
+                <li><a href="/user/personal/${session_user.id}">最新的访问记录</a></li>
+                <li class="active"><a href="/user/requestList">最新的申请记录<span class="sr-only">(current)</span></a></li>
+                <li><a href="/user/tempList">临时申请记录</a></li>
+                <li><a href="/user/auth_list">权限分配列表</a></li>
+                <li><a href="/info">病历信息</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="contentRight">
-            <h1 class="page-header">搜索用户列表</h1>
+            <h1 class="page-header">最近访问记录</h1>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>病历类别</th>
-                        <th>用户名</th>
-                        <th>访问</th>
-                        <th>授权</th>
+                        <th>医疗机构</th>
+                        <th>申请时间</th>
+                        <th>给予授权</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="info" items="${paginate.pageList}">
+                    <c:forEach var="auth" items="${paginate.pageList}">
                         <tr>
-                            <td>${info.categoryName}</td>
-                            <td>${info.username}</td>
-                            <td>
-                                <c:if test="${session_user.type !=0 }">
-                                <a href="/info/detail/${info.userId}?typeId=${info.categoryId}">访问</a>
-                                </c:if>
-                            </td>
-                            <td>
-                                <c:if test="${session_user.type ==0 }">
-                                <a href="/user/auth/${info.userId}?typeId=${info.categoryId}">授权信息</a>
-                                </c:if>
-                            </td>
+                            <td>${auth.categoryName}</td>
+                            <td>${auth.orgName}</td>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${auth.trustDate}"/></td>
+                            <td><a href="/user/auth/${auth.org_id}?typeId=${auth.type}">修改授权</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -8,10 +8,8 @@ import com.pubmed.medicine.Helper.UserHelper;
 import com.pubmed.medicine.model.Auth;
 import com.pubmed.medicine.model.Category;
 import com.pubmed.medicine.model.User;
-import com.pubmed.medicine.service.AccessService;
-import com.pubmed.medicine.service.AuthService;
-import com.pubmed.medicine.service.CategoryService;
-import com.pubmed.medicine.service.UserService;
+import com.pubmed.medicine.model.Vote;
+import com.pubmed.medicine.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,11 +36,13 @@ public class UserController extends BaseController {
 	private AuthService authService;
 	@Autowired
 	private AccessService accessService;
+	@Autowired
+	private VoteService voteService;
 
 	@ModelAttribute("weights")
 	public List<Integer> weights() {
 		List<Integer> l = new ArrayList<Integer>();
-		for(int i=0;i<10;i++){
+		for(int i=0;i<20;i++){
 			l.add(i);
 		}
 		return l;
@@ -97,7 +97,7 @@ public class UserController extends BaseController {
 		User orgUser = userService.getUser(orgId);
 		Auth newAuth = authService.getAuth(sessionUser,orgUser,typeId);
 		if(newAuth==null){
-			authService.addAuth(sessionUser,orgUser,0);
+			authService.addAuth(sessionUser,orgUser,0,typeId);
 			newAuth = authService.getAuth(sessionUser,orgUser,typeId);
 		}
 		newAuth.setOrgName(orgUser.getName());
@@ -115,7 +115,7 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String submitRegister(@ModelAttribute User user, BindingResult result, HttpSession session) {
+	public String submitRegister(@ModelAttribute User user, BindingResult result, HttpSession session,Model model) {
 			User user_sql = userService.getUser(user.getName());
 			UserHelper.vaildID(user, user_sql, result);
 			if(result.hasErrors()) {
@@ -123,12 +123,14 @@ public class UserController extends BaseController {
 			}
 			else {
 				userService.insert(user);
+				user = userService.getUser(user.getName());
+				session.setAttribute(Constants.SESSION_USER, user);
 				return "redirect:/info";
 			}
 		}
 
 	@RequestMapping(value = "/temp", method = RequestMethod.POST)
-	public String submitTemp(@ModelAttribute User user, BindingResult result, HttpSession session) {
+	public String submitTemp(@ModelAttribute User user, BindingResult result, HttpSession session,Model model) {
 		User user_sql = userService.getUser(user.getName());
 		UserHelper.vaildID(user, user_sql, result);
 		if(result.hasErrors()) {
@@ -136,6 +138,7 @@ public class UserController extends BaseController {
 		}
 		else {
 			userService.insert(user);
+			user = userService.getUser(user.getName());
 			session.setAttribute(Constants.SESSION_USER, user);
 			return "redirect:/info";
 		}
@@ -151,18 +154,79 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/personal/{userId}", method = RequestMethod.GET)
 	public String viewPersonal(@PathVariable long userId,Model model) {
+		if(userService.getUser(userId).getType()!=0) return "redirect:/user/org/"+userId;
 		Paginate paginate = new Paginate(0,10);
 		paginate.setPageList(accessService.getAccessList(userId));
 		model.addAttribute("paginate", paginate);
-		return "user/personal";
+		return "/user/personal";
 	}
 
 	@RequestMapping(value = "/org/{userId}", method = RequestMethod.GET)
 	public String viewOrg(@PathVariable long userId,Model model) {
+
 		Paginate paginate = new Paginate(0,10);
 		paginate.setPageList(authService.getByOrg(userId));
 		model.addAttribute("paginate", paginate);
-		return "user/org";
+		return "/user/org";
+	}
+	@RequestMapping(value = "/vote", method = RequestMethod.GET)
+	public String viewVote(Model model,HttpSession session) {
+		long userId = ((User)session.getAttribute(Constants.SESSION_USER)).getId();
+		Paginate paginate = new Paginate(0,10);
+		paginate.setPageList(voteService.getVotes(userId));
+		model.addAttribute("paginate", paginate);
+		return "/user/vote";
+	}
+	@RequestMapping(value = "/auth_list", method = RequestMethod.GET)
+	public String authList(Model model,HttpSession session) {
+		User user = (User) session.getAttribute(Constants.SESSION_USER);
+		Paginate paginate = new Paginate(0,10);
+		paginate.setPageList(authService.getAuthByUser(user));
+		model.addAttribute("paginate", paginate);
+		return "/user/auth_list";
+	}
+	@RequestMapping(value = "/requestList", method = RequestMethod.GET)
+	public String requestList(Model model,HttpSession session) {
+		User user = (User) session.getAttribute(Constants.SESSION_USER);
+		Paginate paginate = new Paginate(0,10);
+		paginate.setPageList(authService.getRequestByUser(user));
+		model.addAttribute("paginate", paginate);
+		return "/user/request_list";
+	}
+
+	@RequestMapping(value = "/tempList", method = RequestMethod.GET)
+	public String tempList(Model model,HttpSession session) {
+		User user = (User) session.getAttribute(Constants.SESSION_USER);
+		Paginate paginate = new Paginate(0,10);
+		paginate.setPageList(authService.getRequestByUser(user));
+		model.addAttribute("paginate", paginate);
+		return "/user/temp_list";
+	}
+
+	@RequestMapping(value = "/vote/detail/{authId}", method = RequestMethod.GET)
+	public String editVote(@PathVariable long authId,Model model,HttpSession session) {
+		User org = (User) session.getAttribute(Constants.SESSION_USER);
+		Vote vote = voteService.getVote(org.getId(),authId);
+		model.addAttribute("vote", vote);
+		Auth toVoteAuth = authService.getById(authId);
+		Auth userAuth = authService.getAuth(userService.getUser(toVoteAuth.getUser_id()),org,toVoteAuth.getType());
+		List<Integer> l = new ArrayList<Integer>();
+		for(int i=0;i<=userAuth.getWeight();i++){
+			l.add(i);
+		}
+		model.addAttribute("userWeights",l);
+		return "/user/vote_detail";
+	}
+
+	@RequestMapping(value = "/vote/detail/{authId}", method = RequestMethod.POST)
+	public String postVote(@ModelAttribute Vote vote,Model model,HttpSession session) {
+		Vote newVote = voteService.getVoteById(vote.getId());
+		vote.setStatus(1);
+		newVote.setStatus(1);
+		newVote.setVotePoint(vote.getVotePoint());
+		voteService.updateVote(newVote);
+		voteService.checkVoteResult(newVote);
+		return "redirect:/user/vote";
 	}
 
 }

@@ -8,5 +8,10 @@
         <c:forEach var="category" items="${categories}">
             <li><a href="/info/detail/${look_user.id}?typeId=${category.id}" class="${currentCateId == category.id ? 'in_block current' : ''}">${category.name}</a></li>
         </c:forEach>
+        <c:if test="${session_user!=null&&look_user.id==session_user.id}">
+            <li><a href="/user/personal/${session_user.id}">个人中心</a> </li>
+        </c:if>
+
+
     </ul>
 </div>

@@ -2,8 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pubmed.medicine.dao.VoteDao">
 
-    <select id="getAllByUserId" resultType="Vote">
-        SELECT * FROM temp_access_vote where userId = #{userId}
+    <select id="getToVoteByUserId" resultType="Vote">
+        SELECT a.* ,c.name as userName,d.name as orgName,e.name as voteName,f.name as categoryName
+        from temp_access_vote a
+        left join trust b on a.accessId = b.id
+        left join users c on b.user_id = c.id
+        left join users d on b.org_id = d.id
+        left join users e on a.userId = e.id
+        left join type_value f on b.type = f.id
+        where a.userId = #{userId}
     </select>
 
     <select id="getNotVotedByUserId" resultType="Vote">
@@ -11,7 +18,38 @@
     </select>
 
     <select id="getByAccessId" resultType="Vote">
-        SELECT * FROM temp_access_vote where accessId = #{accessId}
+        SELECT a.*,b.name as voteName,c.weight as voteMax FROM temp_access_vote a
+        inner join trust t on a.accessId = t.id
+        inner join users b on a.userId = b.id
+        inner join trust c on c.org_id = a.userId and c.user_id = t.user_id and c.type=t.type
+        where a.accessId = #{accessId}
+    </select>
+
+    <select id="getRelatedUsers" resultType="User">
+        SELECT b.* FROM trust a
+        left join users b on a.org_id = b.id
+        where a.type = #{typeId} and a.user_id=#{userId} and a.weight>0
+    </select>
+
+    <select id="getVote" resultType="Vote">
+        SELECT a.* ,c.name as userName,d.name as orgName,e.name as voteName,f.name as categoryName
+        from temp_access_vote a
+        left join trust b on a.accessId = b.id
+        left join users c on b.user_id = c.id
+        left join users d on b.org_id = d.id
+        left join users e on a.userId = e.id
+        left join type_value f on b.type = f.id
+        where a.accessId = #{accessId} and a.userId=#{userId}
+    </select>
+    <select id="getVoteById" resultType="Vote">
+        SELECT a.* ,c.name as userName,d.name as orgName,e.name as voteName,f.name as categoryName
+        from temp_access_vote a
+        left join trust b on a.accessId = b.id
+        left join users c on b.user_id = c.id
+        left join users d on b.org_id = d.id
+        left join users e on a.userId = e.id
+        left join type_value f on b.type = f.id
+        where a.id = #{id}
     </select>
 
     <insert id="insert" parameterType="Vote">
@@ -23,7 +61,6 @@
     <update id="update" parameterType="Vote">
         update temp_access_vote set
         userId = #{userId},
-        accessId = #{accessId},
         authDate = getDate(),
         status = #{status},
         votePoint = #{votePoint}

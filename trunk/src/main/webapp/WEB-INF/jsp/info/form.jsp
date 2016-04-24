@@ -21,6 +21,15 @@
                         <form:input path="title" cssClass="txtNew w300"  readonly="true"/>
                     </td>
                 </tr>
+                <c:if test="${info.userId==session_user.id}">
+                    <tr>
+                        <td valign="top" class="txtRight">临时访问需求分值：</td>
+                        <td valign="top" class="red st">●</td>
+                        <td>
+                            <form:textarea path="shold" cssClass="bd_ccc" rows="10" cols="80" cssStyle="border-radius:3px"/>
+                        </td>
+                    </tr>
+                </c:if>
                 <tr>
                     <td valign="top" class="txtRight">内 容：</td>
                     <td valign="top" class="red st">●</td>

@@ -9,7 +9,8 @@ content nvarchar(500),
 title nvarchar(50),
 typeId int,
 status int,
-updateTime datetime
+updateTime datetime,
+shold float
 )
 
 create table access_history
@@ -61,7 +62,7 @@ create table temp_access
 id bigInt IDENTITY (1,1)primary key,
 name varchar(32),
 detail varchar(100),
-accedd_id bigInt,
+access_id bigInt,
 type int,
 phone char(32),
 status int,

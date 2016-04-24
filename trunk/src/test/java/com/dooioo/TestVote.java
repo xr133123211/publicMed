@@ -28,9 +28,7 @@ public class TestVote extends  BaseTest {
         long accessId = 123L;
         voteService.addVotes(users,accessId);
         System.out.println(voteService.getAllByAccess(accessId).get(0).getAccessId());
-        System.out.println(voteService.getAllByUser(user).get(0).getAccessId());
         System.out.println(voteService.getToVoteByUser(user).get(0).getAccessId());
-        voteService.makeVote(voteService.getToVoteByUser(user).get(0),10);
         System.out.println("toVoteSize:"+voteService.getToVoteByUser(user).size());
     }
 

@@ -1,6 +1,7 @@
 package com.pubmed.medicine.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -14,11 +15,16 @@ public class Auth implements Serializable {
     private int  weight;
     private int  status;
     private int  type;
+    private int tempStatus;
+    private Date tempDate;
+
 
     private String categoryName;
     private String orgName;
     private String userName;
     private String authStatus;
+    private String voteType;
+    private float shold;
 
 
     public long getId() {
@@ -111,5 +117,45 @@ public class Auth implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getVoteType() {
+        if(getTempStatus()==1) return "申请通过";
+        else if(getTempStatus()==3) return "申请过期";
+        else if(getTempStatus()==2) return "申请拒绝";
+        else return "申请中";
+
+    }
+
+    public void setVoteType(String voteType) {
+        this.voteType = voteType;
+    }
+
+    public float getShold() {
+        return shold;
+    }
+
+    public void setShold(float shold) {
+        this.shold = shold;
+    }
+
+    public int getTempStatus() {
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.add(Calendar.DAY_OF_MONTH,-1);
+        Date lastDay = lastDate.getTime();
+        if(tempDate!=null&&tempDate.before(lastDay)&&tempStatus==1) return 3;//-1未申请 0:申请中 1:申请通过 2:申请拒绝 3:申请过期
+        else return tempStatus;
+    }
+
+    public void setTempStatus(int tempStatus) {
+        this.tempStatus = tempStatus;
+    }
+
+    public Date getTempDate() {
+        return tempDate;
+    }
+
+    public void setTempDate(Date tempDate) {
+        this.tempDate = tempDate;
     }
 }

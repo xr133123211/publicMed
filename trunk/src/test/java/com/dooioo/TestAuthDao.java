@@ -1,6 +1,7 @@
 package com.dooioo;
 
 import com.pubmed.medicine.model.Auth;
+import com.pubmed.medicine.model.TempAccess;
 import com.pubmed.medicine.model.User;
 import com.pubmed.medicine.service.AuthService;
 import com.pubmed.medicine.service.UserService;
@@ -17,6 +18,9 @@ public class TestAuthDao extends  BaseTest {
     UserService userService;
 
     @Test
+    public void testTemp(){
+        System.out.println(authService.getTempAccess(21));
+    }
     public void testSelectRelated(){
         User user = userService.getUser("master");
         User org = userService.getUser("expert");
@@ -27,7 +31,7 @@ public class TestAuthDao extends  BaseTest {
     public void test(){
         User user = userService.getUser("master");
         User org = userService.getUser("expert");
-        authService.addAuth(user,org,10);
+        authService.addAuth(user,org,10,0);
         Auth auth = authService.getByUser(user).get(0);
         auth.setWeight(11);
         authService.updateAuth(auth);

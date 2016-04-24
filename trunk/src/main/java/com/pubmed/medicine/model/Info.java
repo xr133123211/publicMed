@@ -15,12 +15,19 @@ public class Info implements Serializable {
     private String title;
     private String content;
     private Date updateTime;
+    private float shold;
 
     //ext
     private String categoryName;
     private String username;
     private int categoryId;
     private boolean accessAuth;
+    private int request;
+    private int tempAccess;
+
+
+    public Info() {
+    }
 
     public String getCategoryName() {
         return categoryName;
@@ -100,5 +107,31 @@ public class Info implements Serializable {
 
     public void setAccessAuth(boolean accessAuth) {
         this.accessAuth = accessAuth;
+    }
+
+
+    public int getRequest() {
+        return request;
+    }
+
+    public void setRequest(int request) {
+        this.request = request;
+    }
+
+
+    public float getShold() {
+        return shold;
+    }
+
+    public void setShold(float shold) {
+        this.shold = shold;
+    }
+
+    public int getTempAccess() {
+        return tempAccess;
+    }
+
+    public void setTempAccess(int tempAccess) {
+        this.tempAccess = tempAccess;
     }
 }

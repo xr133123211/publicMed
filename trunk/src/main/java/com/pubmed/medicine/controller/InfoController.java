@@ -6,13 +6,8 @@ import com.pubmed.common.Paginate;
 import com.pubmed.common.base.BaseController;
 import com.pubmed.common.model.NotFoundException;
 import com.pubmed.medicine.Helper.InfoHelper;
-import com.pubmed.medicine.model.Category;
-import com.pubmed.medicine.model.Info;
-import com.pubmed.medicine.model.User;
-import com.pubmed.medicine.service.AuthService;
-import com.pubmed.medicine.service.CategoryService;
-import com.pubmed.medicine.service.InfoService;
-import com.pubmed.medicine.service.UserService;
+import com.pubmed.medicine.model.*;
+import com.pubmed.medicine.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +35,8 @@ public class InfoController extends BaseController {
     private InfoService infoService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private VoteService voteService;
     @Autowired
     private CategoryService categoryService;
     private Logger logger =  Logger.getLogger(this.getClass());
@@ -79,8 +76,11 @@ public class InfoController extends BaseController {
             infoService.insert(info);
             info = infoService.findByUser(userId,typeId);
         }
-        logger.info("auth check userId:"+userId+" requestId:"+user.getId());
+
         info.setAccessAuth(authService.checkAuth(userId,typeId,user.getId()));
+        info.setRequest(authService.getRequest(userId,typeId,user.getId()));
+        info.setTempAccess(authService.getTempAccess(userId,typeId,user.getId()));
+        logger.info("auth tempAccess:"+info.getTempAccess());
         model.addAttribute(info);
         request.getSession().setAttribute(Constants.LOOK_USER,userService.getUser(userId));
         return "/info/show";
@@ -163,5 +163,30 @@ public class InfoController extends BaseController {
         logger.info("Update Info Conetent:"+info.getContent());
         return "redirect:/info/detail/"+info.getUserId()+"?typeId="+info.getTypeId();
     }
+
+    @RequestMapping(value = "/{infoId}/request")
+    public String request( @PathVariable long infoId ,HttpSession session, Model model) {
+        User org = (User) session.getAttribute(Constants.SESSION_USER);
+        Info info = infoService.findById(infoId);
+        User user = userService.getUser(info.getUserId());
+        authService.addAuth(user,org,0,info.getTypeId());
+        return "redirect:/info/detail/"+info.getUserId()+"?typeId="+info.getTypeId();
+    }
+
+    @RequestMapping(value = "/{infoId}/tempApply")
+    public String applyTemp( @PathVariable long infoId ,HttpSession session, Model model) {
+        User org = (User) session.getAttribute(Constants.SESSION_USER);
+        Info info = infoService.findById(infoId);
+        User user = userService.getUser(info.getUserId());
+        Auth auth = authService.getAuth(user,org,info.getTypeId());
+        if(auth==null) authService.addAuth(user,org,-1,info.getTypeId());
+        auth = authService.getAuth(user,org,info.getTypeId());
+        authService.addTempAuth(auth);
+        return "redirect:/info/detail/"+info.getUserId()+"?typeId="+info.getTypeId();
+    }
+
+
+
+
 
 }

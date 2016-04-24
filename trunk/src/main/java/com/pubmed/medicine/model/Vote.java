@@ -13,6 +13,12 @@ public class Vote  {
     private int status;
     private Date authDate;
 
+    private String voteName;
+    private String orgName;
+    private String userName;
+    private String categoryName;
+    private String voteStatus;
+    private int voteMax;
 
     public int getStatus() {
         return status;
@@ -31,7 +37,8 @@ public class Vote  {
     }
 
     public int getVotePoint() {
-        return votePoint;
+        if(status==0) return 0;
+        else return votePoint;
     }
 
     public void setVotePoint(int votePoint) {
@@ -52,5 +59,63 @@ public class Vote  {
 
     public void setAccessId(long accessId) {
         this.accessId = accessId;
+    }
+
+    public String getVoteName() {
+        return voteName;
+    }
+
+    public void setVoteName(String voteName) {
+        this.voteName = voteName;
+    }
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getVoteMax() {
+        return voteMax;
+    }
+
+    public void setVoteMax(int voteMax) {
+        this.voteMax = voteMax;
+    }
+
+    public String getVoteStatus() {
+        if(status==0) return "未投票";
+        else return "已投票";
+    }
+
+    public void setVoteStatus(String voteStatus) {
+        this.voteStatus = voteStatus;
     }
 }

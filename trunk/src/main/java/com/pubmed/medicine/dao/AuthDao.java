@@ -2,6 +2,7 @@ package com.pubmed.medicine.dao;
 
 
 import com.pubmed.medicine.model.Auth;
+import com.pubmed.medicine.model.TempAccess;
 import com.pubmed.medicine.model.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,13 @@ public interface AuthDao {
 	public List<User> getOrgs(@Param("user_id") long userId, @Param("type") int type);
 
 
+	List<Auth> getAuthByUserId(@Param("user_id") long id);
+
+	List<Auth> getRequestByUser(@Param("user_id") long id);
+
+	Auth getByID(@Param("id")  long id);
+
+	TempAccess getTempAuth(@Param("access_id") long access_id);
+	void insertTempAuth(TempAccess temp);
+	void updateTempAuth(TempAccess temp);
 }

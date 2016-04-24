@@ -18,15 +18,16 @@
 
     <insert id="add" parameterType="Info">
         INSERT into info
-        (userId,content,title,typeId,updateTime)
-        VALUES (#{userId},#{content},#{title},#{typeId},getDate())
+        (userId,content,title,typeId,updateTime,shold)
+        VALUES (#{userId},#{content},#{title},#{typeId},getDate(),10)
     </insert>
     
     <update id="update" parameterType="Info">
         update info set
         content = #{content},
         title = #{title},
-        updateTime = getDate()
+        updateTime = getDate(),
+        shold = #{shold}
         where id = #{id}
     </update>
 

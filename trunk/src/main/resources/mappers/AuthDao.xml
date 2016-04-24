@@ -2,22 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pubmed.medicine.dao.AuthDao">
 
-    <select id="getByUserId" resultType="Auth">
-       SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName
+    <select id="getRequestByUser" resultType="Auth">
+       SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName,e.shold,f.status as tempStatus,f.authDate as tempDate
+        FROM temp_access f
+        left join trust a on a.id = f.access_id
+        left join users b on a.user_id=b.id
+        left join users c on a.org_id=c.id
+        left join type_value d on a.type = d.id
+        left join info e on a.type = e.typeId and a.user_id = e.userId
+        where a.user_id = #{user_id} and a.user_id != a.org_id and a.status!=1
+    </select>
+    <select id="getAuthByUserId" resultType="Auth">
+        SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName,e.shold,f.status as tempStatus,f.authDate as tempDate
         FROM trust a
         left join users b on a.user_id=b.id
         left join users c on a.org_id=c.id
         left join type_value d on a.type = d.id
-        where a.user_id = #{user_id}
+        left join info e on a.type = e.typeId and a.user_id = e.userId
+        left join temp_access f on a.id = f.access_id
+        where a.user_id = #{user_id} and a.user_id != a.org_id and a.status!=0
+    </select>
+    <select id="getByUserId" resultType="Auth">
+        SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName,e.shold,f.status as tempStatus,f.authDate as tempDate
+        FROM trust a
+        left join users b on a.user_id=b.id
+        left join users c on a.org_id=c.id
+        left join type_value d on a.type = d.id
+        left join info e on a.type = e.typeId and a.user_id = e.userId
+        left join temp_access f on a.id = f.access_id
+        where a.user_id = #{user_id} and a.user_id != a.org_id
     </select>
     <select id="getByOrgId" resultType="Auth">
-        SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName
+        SELECT a.* ,b.name as userName,c.name as orgName,d.name as categoryName,e.shold,f.status as tempStatus,f.authDate as tempDate
         FROM trust a
         left join users b on a.user_id=b.id
         left join users c on a.org_id=c.id
         left join type_value d on a.type = d.id
-        where a.org_id = #{org_id}
+        left join info e on a.type = e.typeId and a.user_id = e.userId
+        left join temp_access f on a.id = f.access_id
+        where a.org_id = #{org_id} and a.user_id != a.org_id
     </select>
+
 
     <select id="getOrgs" resultType="User">
         SELECT org.* from trust t
@@ -25,7 +50,11 @@
         where t.user_id=#{user_id} and t.type = #{type}
     </select>
 
-    
+
+    <select id="getByID" resultType="Auth">
+        SELECT * from trust
+        where id = #{id}
+    </select>
     <insert id="insert" parameterType="Auth">
         INSERT into trust
         (user_id,org_id,type,weight,trustDate,status)
@@ -46,5 +75,19 @@
         and org_id = #{org_id}
         and type = #{type}
     </select>
+
+    <select id="getTempAuth" resultType="TempAccess">
+        SELECT top 1 * from temp_access where
+        access_id = #{access_id}
+    </select>
+    <insert id="insertTempAuth" parameterType="TempAccess">
+        insert into temp_access
+        (access_id,status,authDate)values(#{access_id},0,getDate());
+    </insert>
+    <update id="updateTempAuth" parameterType="TempAccess">
+        update temp_access
+        set status=#{status} ,authDate = getDate()
+        where id = #{id}
+    </update>
 
 </mapper>
